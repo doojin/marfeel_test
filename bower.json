@@ -11,5 +11,9 @@
   "private": true,
   "dependencies": {
     "requirejs": "~2.1.22"
+  },
+  "devDependencies": {
+    "jasmine-core": "jasmine#~2.3.4",
+    "jquery": "~2.1.4"
   }
 }
