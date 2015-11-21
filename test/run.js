@@ -22,7 +22,7 @@
 }());
 
 define(['jQ', 'boot'], function($) {
-    var specs = ['specs/config'];
+    var specs = ['specs/default_config'];
 
     require(specs, function() {
         beforeEach(function() {
