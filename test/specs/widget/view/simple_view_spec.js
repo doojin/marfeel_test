@@ -11,7 +11,7 @@ define(['jQ', 'widget/view/simple_view'], function($, SimpleView) {
         it('_totalWidth() should calculate width of widget for one nested chart', function() {
             simpleView = new SimpleView({
                 data: [{/* the only one chart */}],
-                width: 100,
+                size: 100,
                 paddingLeft: 10,
                 paddingRight: 20,
                 spacing: 30
@@ -25,7 +25,7 @@ define(['jQ', 'widget/view/simple_view'], function($, SimpleView) {
         it('_totalWidth() should calculate width of widget for multiple nested charts', function() {
             simpleView = new SimpleView({
                 data: [{/* first chart */}, {/* second chart */}, {/* third chart */}],
-                width: 100,
+                size: 100,
                 paddingLeft: 10,
                 paddingRight: 20,
                 spacing: 30
@@ -40,7 +40,7 @@ define(['jQ', 'widget/view/simple_view'], function($, SimpleView) {
             simpleView = new SimpleView({
                 paddingTop: 10,
                 paddingBottom: 20,
-                height: 100
+                size: 100
             });
 
             var result = simpleView._totalHeight();

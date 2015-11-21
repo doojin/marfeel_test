@@ -8,17 +8,20 @@ define(['widget/default_config'], function(DefaultConfig) {
         });
 
         it('merge() should update old fields of default config', function() {
-            var result = config.merge({ width: 1024, height: 512 });
+            var result = config.merge({ size: 1024 });
 
             expect(result).toEqual({
-                width: 1024,
-                height: 512,
+                size: 1024,
                 parent: 'body',
                 paddingTop: 30,
                 paddingRight: 30,
                 paddingBottom: 30,
                 paddingLeft: 30,
-                spacing: 30
+                spacing: 30,
+                thickness: 10,
+                primaryColor: '#005E00',
+                secondaryColor: '#4DD027',
+                colors: []
             });
         });
 
@@ -29,8 +32,7 @@ define(['widget/default_config'], function(DefaultConfig) {
             });
 
             expect(result).toEqual({
-                width: 200,
-                height: 200,
+                size: 200,
                 prop1: 'value1',
                 prop2: 'value2',
                 parent: 'body',
@@ -38,7 +40,11 @@ define(['widget/default_config'], function(DefaultConfig) {
                 paddingRight: 30,
                 paddingBottom: 30,
                 paddingLeft: 30,
-                spacing: 30
+                spacing: 30,
+                thickness: 10,
+                primaryColor: '#005E00',
+                secondaryColor: '#4DD027',
+                colors: []
             });
         });
     });

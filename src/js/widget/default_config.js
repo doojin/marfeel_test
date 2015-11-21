@@ -2,14 +2,17 @@ define(function() {
 
     function DefaultConfig() {
         this.config = {
-            width: 200,
-            height: 200,
+            size: 200,
             parent: 'body',
             paddingTop: 30,
             paddingRight: 30,
             paddingBottom: 30,
             paddingLeft: 30,
-            spacing: 30
+            spacing: 30,
+            thickness: 10,
+            primaryColor: '#005E00',
+            secondaryColor: '#4DD027',
+            colors: []
         };
     }
 
