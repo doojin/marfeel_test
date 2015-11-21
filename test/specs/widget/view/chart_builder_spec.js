@@ -103,5 +103,47 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, builder) {
 
             expect(result).toEqual('150,50');
         });
+
+        it('_markData() should return array of 4 marks', function() {
+            builder.config.size = 200;
+            builder.config.thickness = 10;
+
+            var marks = builder._markData();
+            var topMark = marks[0];
+            var rightMark = marks[1];
+            var bottomMark = marks[2];
+            var leftMark = marks[3];
+
+            expect(topMark).toEqual({x: 98.5, y: 11, width: 3, height:4});
+            expect(rightMark).toEqual({x: 185, y: 98, width: 4, height: 3});
+            expect(bottomMark).toEqual({x: 98.5, y: 185, width: 3, height: 4});
+            expect(leftMark).toEqual({x: 11, y: 98.5, width: 4, height: 3});
+        });
+
+        it('_buildMarks() should append all marks to parent node', function() {
+            var fixture = d3.select('#fixture').select('svg');
+            spyOn(builder, 'primaryColor').and.returnValue('#fff');
+            spyOn(builder, '_markData').and.returnValue([
+                {x: 1, y: 2, width: 3, height: 4},
+                {x: 10, y: 20, width: 30, height: 40}
+            ]);
+
+            builder._buildMarks(fixture);
+            var rectangles = $('#fixture').find('svg').find('rect');
+
+            expect(rectangles.length).toEqual(2);
+            var rect1 = $(rectangles[0]);
+            expect(rect1.attr('x')).toEqual('1');
+            expect(rect1.attr('y')).toEqual('2');
+            expect(rect1.attr('width')).toEqual('3');
+            expect(rect1.attr('height')).toEqual('4');
+            expect(rect1.attr('fill')).toEqual('#fff');
+            var rect2 = $(rectangles[1]);
+            expect(rect2.attr('x')).toEqual('10');
+            expect(rect2.attr('y')).toEqual('20');
+            expect(rect2.attr('width')).toEqual('30');
+            expect(rect2.attr('height')).toEqual('40');
+            expect(rect2.attr('fill')).toEqual('#fff');
+        });
     });
 });

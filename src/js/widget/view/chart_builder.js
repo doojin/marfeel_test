@@ -6,7 +6,12 @@ define(['d3'], function() {
         this.config = config;
 
         var group = this._buildGroups(parent);
+
+        // Building all components of chart
         this._buildCircles(group);
+        this._buildMarks(group);
+
+        return group;
     };
 
     chartBuilder._buildGroups = function(parent) {
@@ -26,9 +31,51 @@ define(['d3'], function() {
             // For animation only
             .attr('stroke-dashoffset', -this._circleLength() / 2)
             .transition()
-            .duration(1000)
+            .duration(700)
             .ease('linear-in-out')
             .attr('stroke-dashoffset', this._circleLength() / 4);
+    };
+
+    // Drawing small marks on the top, bottom, left and right of circle
+    chartBuilder._buildMarks = function(parent) {
+        parent.selectAll('rect')
+            .data(chartBuilder._markData())
+            .enter()
+            .append('rect')
+            .attr('x', function(d) { return d.x; })
+            .attr('y', function(d) { return d.y; })
+            .attr('width', function(d) { return d.width; })
+            .attr('height', function(d) { return d.height; })
+            .attr('fill', chartBuilder.primaryColor)
+            .attr('fill-opacity', 0.6);
+    };
+
+    chartBuilder._markData = function() {
+        var topMark = {};
+        topMark.width = 0.015 * this.config.size;
+        topMark.height = 0.02 * this.config.size;
+        topMark.x = this.config.size / 2 - topMark.width / 2;
+        topMark.y = this.config.thickness + 1;
+
+        var rightMark = {};
+        rightMark.width = 0.02 * this.config.size;
+        rightMark.height = 0.015 * this.config.size;
+        rightMark.x = this.config.size - rightMark.width - this.config.thickness - 1;
+        rightMark.y = this.config.size / 2 - topMark.height / 2;
+
+        var bottomMark = {};
+        bottomMark.width = 0.015 * this.config.size;
+        bottomMark.height = 0.02 * this.config.size;
+        bottomMark.x = this.config.size / 2 - bottomMark.width / 2;
+        bottomMark.y = this.config.size - bottomMark.height - this.config.thickness - 1;
+
+        var leftMark = {};
+        leftMark.width = 0.02 * this.config.size;
+        leftMark.height = 0.015 * this.config.size;
+        leftMark.x = this.config.thickness + 1;
+        leftMark.y = this.config.size / 2 - leftMark.height / 2;
+
+        return [topMark, rightMark, bottomMark, leftMark];
     };
 
     chartBuilder._appendCircle = function(parent) {
