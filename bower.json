@@ -1,0 +1,15 @@
+{
+  "name": "marfeel_test",
+  "homepage": "https://github.com/doojin/marfeel_test",
+  "authors": [
+    "Dmitry Papka <dmitry.papka@gmail.com>"
+  ],
+  "description": "Task provided by Marfeel",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "requirejs": "~2.1.22"
+  }
+}
