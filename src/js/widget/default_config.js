@@ -3,7 +3,13 @@ define(function() {
     function DefaultConfig() {
         this.config = {
             width: 200,
-            height: 200
+            height: 200,
+            parent: 'body',
+            paddingTop: 30,
+            paddingRight: 30,
+            paddingBottom: 30,
+            paddingLeft: 30,
+            spacing: 30
         };
     }
 

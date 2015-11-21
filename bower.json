@@ -10,7 +10,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "requirejs": "~2.1.22"
+    "requirejs": "~2.1.22",
+    "d3": "~3.5.9"
   },
   "devDependencies": {
     "jasmine-core": "jasmine#~2.3.4",

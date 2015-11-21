@@ -11,7 +11,8 @@
             'boot': JASMINE_DIR + 'boot',
             'jquery': ROOT_DIR + 'bower_components/jquery/dist/jquery.min',
             'jQ': ROOT_DIR + 'test/helpers/jquery_private', // This dependency won't pollute global scope with $ variable
-            'specs': ROOT_DIR + 'test/specs'
+            'specs': ROOT_DIR + 'test/specs',
+            'd3': ROOT_DIR + 'bower_components/d3/d3.min'
         },
         shim: {
             'jasmine': {exports: 'jasmineRequire'},
@@ -22,7 +23,10 @@
 }());
 
 define(['jQ', 'boot'], function($) {
-    var specs = ['specs/default_config'];
+    var specs = [
+        'specs/widget/default_config_spec',
+        'specs/widget/view/simple_view_spec'
+    ];
 
     require(specs, function() {
         beforeEach(function() {
