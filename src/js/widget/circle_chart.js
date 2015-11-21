@@ -7,11 +7,13 @@ define([
 ) {
 
     function CircleChart(config) {
-        config = new DefaultConfig().merge(config);
-
-        this.view = new SimpleView(config);
-        this.view.build();
+        this.config = new DefaultConfig().merge(config);
     }
+
+    CircleChart.prototype.init = function() {
+        this.view = new SimpleView(this.config);
+        this.view.build();
+    };
 
     return CircleChart;
 });

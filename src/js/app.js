@@ -7,7 +7,9 @@
 })();
 
 define(['widget/circle_chart'], function (CircleChart) {
-    new CircleChart({
+    var chart = new CircleChart({
         data: [1]
     });
+
+    chart.init();
 });
