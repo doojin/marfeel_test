@@ -49,3 +49,11 @@
 .circle-chart text.member {
     font-weight: bold;
 }
+
+.circle-chart tspan.raw {
+    fill: #A0A0A0;
+}
+
+.circle-chart rect.underline {
+    fill: #E2E2E2;
+}

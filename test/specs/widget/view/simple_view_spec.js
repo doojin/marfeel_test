@@ -102,7 +102,9 @@ define(['jQ', 'widget/view/simple_view', 'widget/view/helper'], function($, Simp
         });
 
         it('_formatDescriptions() should format description', function() {
-            simpleView = new SimpleView();
+            simpleView = new SimpleView({
+                size: 300
+            });
             spyOn(simpleView, '_descriptionPosition').and.returnValue('translate(10,20)');
             spyOn(simpleView, '_descriptionEnd').and.returnValue(50);
             spyOn(helper, 'secondaryColor').and.returnValue('#fff');
@@ -111,6 +113,8 @@ define(['jQ', 'widget/view/simple_view', 'widget/view/helper'], function($, Simp
             var g = $('<g>');
             g.append($('<text class="left member">'));
             g.append($('<text class="right member">'));
+            g.append($('<text class="value">'));
+            g.append($('<rect class="underline">'));
             svg.append(g);
             $('#fixture').append(svg);
 
@@ -119,12 +123,18 @@ define(['jQ', 'widget/view/simple_view', 'widget/view/helper'], function($, Simp
 
             var leftText = $('text.left.member');
             var rightText = $('text.right.member');
+            var rightValue = $('text.right');
+            var underline = $('rect.underline');
             expect(g.attr('transform')).toEqual('translate(10,20)');
             expect(leftText.attr('fill')).toEqual('#fff');
             expect(rightText.attr('fill')).toEqual('#000');
+            expect(rightValue.attr('x')).toEqual('50');
+            expect(underline.attr('y')).toEqual('45');
+            expect(underline.attr('width')).toEqual('50');
+            expect(underline.attr('height')).toEqual('4.5');
         });
 
-        it('_descriptionPosition() should calculate desciprtion position', function() {
+        it('_descriptionPosition() should calculate description position', function() {
             simpleView = new SimpleView({
                 size: 100
             });

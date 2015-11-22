@@ -4,7 +4,6 @@ define(['widget/view/helper', 'd3'], function(helper) {
 
     DescriptionBuilder.prototype.build = function(parent, config) {
         this.config = config;
-
         return this._buildDescription(parent);
     };
 
@@ -17,26 +16,78 @@ define(['widget/view/helper', 'd3'], function(helper) {
 
         this._buildLeftText(description);
         this._buildRightText(description);
+        this._buildLine(description);
 
         return description;
     };
 
     DescriptionBuilder.prototype._buildLeftText = function(parent) {
-        parent.append('text')
-            .classed('left', true)
-            .classed('member', true)
+        this._buildMemberName(parent)
             .text(function(d) { return d.member1; })
+            .classed('left', true);
+
+        var value = this._buildValue(parent)
+            .classed('left', true);
+
+        value.append('tspan')
+            .classed('ratio', true)
+            .text(function(d) {
+                var lastPair = helper.lastValues(d);
+                return helper.ratio(lastPair) + '%';
+            });
+
+        value.append('tspan')
+            .classed('raw', true)
+            .attr('dx', this.config.size * 0.03)
+            .text(function(d) {
+                var last = d.values.length - 1;
+                var rawValue = d.values[last].m1;
+                return helper.formatNumber(rawValue, d.suffix);
+            });
+    };
+
+    DescriptionBuilder.prototype._buildRightText = function(parent) {
+        this._buildMemberName(parent)
+            .text(function(d) { return d.member2; })
+            .classed('right', true);
+
+        var value = this._buildValue(parent)
+            .classed('right', true);
+
+        value.append('tspan')
+            .classed('raw', true)
+            .text(function(d) {
+                var last = d.values.length - 1;
+                var rawValue = d.values[last].m2;
+                return helper.formatNumber(rawValue, d.suffix);
+            });
+
+        value.append('tspan')
+            .classed('ratio', true)
+            .attr('dx', this.config.size * 0.03)
+            .text(function(d) {
+                var lastPair = helper.lastValues(d);
+                return 100 - helper.ratio(lastPair) + '%'; });
+
+    };
+
+    DescriptionBuilder.prototype._buildMemberName = function(parent) {
+        return parent.append('text')
+            .classed('member', true)
             .attr('font-size', this.config.descriptionSize)
             .attr('font-family', this.config.fontFamily);
     };
 
-    DescriptionBuilder.prototype._buildRightText = function(parent) {
-        parent.append('text')
-            .classed('right', true)
-            .classed('member', true)
-            .text(function(d) { return d.member2; })
+    DescriptionBuilder.prototype._buildValue = function(parent) {
+        return parent.append('text')
+            .classed('value', true)
             .attr('font-size', this.config.descriptionSize)
             .attr('font-family', this.config.fontFamily);
+    };
+
+    DescriptionBuilder.prototype._buildLine = function(parent) {
+        parent.append('rect')
+            .classed('underline', true);
     };
 
     return DescriptionBuilder;

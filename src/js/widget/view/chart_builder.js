@@ -1,9 +1,7 @@
 // Responsible for building circle chart
-define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
+define(['widget/view/graph_builder', 'widget/view/helper', 'd3'], function(GraphBuilder, helper) {
 
-    var NUMBER_FORMAT = '0,000',
-        NUMBER_SEPARATOR = '.',
-        MARK = {
+    var MARK = {
             length: 0.02,
             thickness: 0.015
         },
@@ -98,15 +96,8 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
                 var val1 = self.config.data[i].values[last].m1;
                 var val2 = self.config.data[i].values[last].m2;
                 var result = val1 + val2;
-                return self._formatNumber(result, d.suffix);
+                return helper.formatNumber(result, d.suffix);
             });
-    };
-
-    ChartBuilder.prototype._formatNumber = function(number, suffix) {
-        var format = d3.format(NUMBER_FORMAT);
-        var result = format(number);
-        result = result.replace(/,/g, NUMBER_SEPARATOR);
-        return suffix ? result + suffix : result;
     };
 
     ChartBuilder.prototype._addGraphColors = function(node) {
@@ -180,14 +171,8 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
     };
 
     ChartBuilder.prototype._chartValue = function(d, i) {
-        var last = this.config.data[i].values.length - 1;
-
-        // Last value pair from the array
-        var val1 = this.config.data[i].values[last].m1;
-        var val2 = this.config.data[i].values[last].m2;
-
-        // Ratio of first and second values
-        var ratio1 = val1 / (val1 + val2);
+        var lastPair = helper.lastValues(this.config.data[i]);
+        var ratio1 = helper.ratio(lastPair) / 100;
         var ratio2 = 1 - ratio1;
 
         // Dividing circle according to ratios

@@ -41,10 +41,10 @@ define([
     SimpleView.prototype._buildDescriptions = function(parent) {
         var descriptionBuilder = new DescriptionBuilder();
         var descriptions = descriptionBuilder.build(parent, this.config);
-        var self = this;
         this._formatDescriptions(descriptions);
     };
 
+    // TODO: move these magic numbers to constants / methods
     SimpleView.prototype._formatDescriptions = function(descriptions) {
         var self = this;
 
@@ -56,6 +56,17 @@ define([
         descriptions.select('text.right.member')
             .attr('fill', function(d, i) { return helper.primaryColor(d, i, self.config); })
             .attr('x', self._descriptionEnd());
+
+        descriptions.selectAll('text.value')
+            .attr('y', this.config.size * 0.1);
+
+        descriptions.select('text.right.value')
+            .attr('x', self._descriptionEnd());
+
+        descriptions.select('rect.underline')
+            .attr('y', this.config.size * 0.15)
+            .attr('width', this._descriptionEnd())
+            .attr('height', this.config.size * 0.015);
     };
 
     // Position of i-th description

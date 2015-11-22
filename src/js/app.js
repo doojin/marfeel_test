@@ -7,6 +7,7 @@
     });
 })();
 
+// TODO: rename build methods
 define(['widget/circle_chart'], function (CircleChart) {
     var config = {
         data: [
