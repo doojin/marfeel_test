@@ -59,41 +59,41 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
             expect(result).toBeCloseTo(62.83, 2);
         });
 
-        it('primaryColor() should return the primary color for i-th chart', function() {
+        it('_primaryColor() should return the primary color for i-th chart', function() {
             builder.config.colors = [
                 {primary: 'p1', secondary: 's1'},
                 {primary: 'p2', secondary: 's2'}
             ];
 
-            expect(builder.primaryColor(null, 0)).toEqual('p1');
-            expect(builder.primaryColor(null, 1)).toEqual('p2');
+            expect(builder._primaryColor(null, 0)).toEqual('p1');
+            expect(builder._primaryColor(null, 1)).toEqual('p2');
         });
 
-        it('primaryColor() should return default primary color from config if color array is empty', function() {
+        it('_primaryColor() should return default primary color from config if color array is empty', function() {
             builder.config.colors = [];
-            builder.config.primaryColor = 'p1';
+            builder.config._primaryColor = 'p1';
 
-            expect(builder.primaryColor(null, 0)).toEqual('p1');
+            expect(builder._primaryColor(null, 0)).toEqual('p1');
         });
 
-        it('secondaryColor() should return the secondary color for i-th chart', function() {
+        it('_secondaryColor() should return the secondary color for i-th chart', function() {
             builder.config.colors = [
                 {primary: 'p1', secondary: 's1'},
                 {primary: 'p2', secondary: 's2'}
             ];
 
-            expect(builder.secondaryColor(null, 0)).toEqual('s1');
-            expect(builder.secondaryColor(null, 1)).toEqual('s2');
+            expect(builder._secondaryColor(null, 0)).toEqual('s1');
+            expect(builder._secondaryColor(null, 1)).toEqual('s2');
         });
 
-        it('secondaryColor() should return default secondary color from config if color array is empty', function() {
+        it('_secondaryColor() should return default secondary color from config if color array is empty', function() {
             builder.config.colors = [];
-            builder.config.secondaryColor = 's1';
+            builder.config._secondaryColor = 's1';
 
-            expect(builder.secondaryColor(null, 0)).toEqual('s1');
+            expect(builder._secondaryColor(null, 0)).toEqual('s1');
         });
 
-        it('chartValue() should calculate chart value', function() {
+        it('_chartValue() should calculate chart value', function() {
             builder.config.data = [{
                     values: [
                         {member1: 12345, member2: 12345}, // dummy data
@@ -102,7 +102,7 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
                 }];
             spyOn(builder, '_circleLength').and.returnValue(200);
 
-            var result = builder.chartValue(null, 0);
+            var result = builder._chartValue(null, 0);
 
             expect(result).toEqual('150,50');
         });
@@ -125,7 +125,7 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
 
         it('_buildMarks() should append all marks to parent node', function() {
             var fixture = d3.select('#fixture').select('svg');
-            spyOn(builder, 'primaryColor').and.returnValue('#fff');
+            spyOn(builder, '_primaryColor').and.returnValue('#fff');
             spyOn(builder, '_markData').and.returnValue([
                 {x: 1, y: 2, width: 3, height: 4},
                 {x: 10, y: 20, width: 30, height: 40}
@@ -156,7 +156,7 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
             $('#fixture').find('svg').append(g);
             var svg = d3.select('#fixture').select('svg');
 
-            spyOn(builder, 'secondaryColor').and.returnValue('#ff00ff');
+            spyOn(builder, '_secondaryColor').and.returnValue('#ff00ff');
 
             expect(line.attr('stroke')).toBeUndefined();
             expect(fill.attr('fill')).toBeUndefined();

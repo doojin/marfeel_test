@@ -1,3 +1,7 @@
+.circle-chart circle.chart {
+    fill-opacity: 0;
+}
+
 .circle-chart path.line {
     stroke-opacity: 0.3;
     stroke-width: 2.5;
@@ -26,4 +30,8 @@
     fill: #303030;
     text-anchor: middle;
     text-transform: uppercase;
+}
+
+.circle-chart rect {
+    fill-opacity: 0.6
 }

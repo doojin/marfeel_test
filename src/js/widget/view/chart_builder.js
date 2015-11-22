@@ -28,11 +28,11 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         var self = this;
 
         this._appendCircle(parent)
-            .attr('stroke', function(d, i) { return self.secondaryColor(d, i); });
+            .attr('stroke', function(d, i) { return self._secondaryColor(d, i); });
 
         this._appendCircle(parent)
-            .attr('stroke', function(d, i) { return self.primaryColor(d, i); })
-            .attr('stroke-dasharray', function(d, i) { return self.chartValue(d, i); })
+            .attr('stroke', function(d, i) { return self._primaryColor(d, i); })
+            .attr('stroke-dasharray', function(d, i) { return self._chartValue(d, i); })
             // For animation only
             .attr('stroke-dashoffset', -this._circleLength() / 2)
             .transition()
@@ -51,9 +51,15 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
             .attr('x', function(d) { return d.x; })
             .attr('y', function(d) { return d.y; })
             .attr('width', function(d) { return d.width; })
-            .attr('height', function(d) { return d.height; })
-            .attr('fill', function(d, i) { return self.primaryColor(d, i); })
-            .attr('fill-opacity', 0.6);
+            .attr('height', function(d) { return d.height; });
+
+        parent.each(function(d, i) {
+            var primaryColor = self._primaryColor(d, i);
+            console.log(primaryColor);
+            d3.select(this)
+                .selectAll('rect')
+                .attr('fill', primaryColor);
+        });
     };
 
     ChartBuilder.prototype._buildGraphs = function(parent) {
@@ -98,11 +104,11 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         var self = this;
         node.select('g')
             .select('path.line')
-            .attr('stroke', function(d, i) { return self.secondaryColor(d, i); });
+            .attr('stroke', function(d, i) { return self._secondaryColor(d, i); });
 
         node.select('g')
             .select('path.fill')
-            .attr('fill', function(d, i) { return self.secondaryColor(d, i); });
+            .attr('fill', function(d, i) { return self._secondaryColor(d, i); });
     };
 
     ChartBuilder.prototype._markData = function() {
@@ -139,7 +145,6 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
             .attr('cx', this._circleCenter())
             .attr('cy', this._circleCenter())
             .attr('r', this._circleRadius())
-            .attr('fill-opacity', 0)
             .attr('stroke-width', this.config.thickness);
     };
 
@@ -155,17 +160,17 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         return Math.PI * 2 * this._circleRadius();
     };
 
-    ChartBuilder.prototype.primaryColor = function(d, i) {
+    ChartBuilder.prototype._primaryColor = function(d, i) {
         var pair = this.config.colors[i];
         return pair && pair.primary ? pair.primary : this.config.primaryColor;
     };
 
-    ChartBuilder.prototype.secondaryColor = function(d, i) {
+    ChartBuilder.prototype._secondaryColor = function(d, i) {
         var pair = this.config.colors[i];
         return pair && pair.secondary ? pair.secondary : this.config.secondaryColor;
     };
 
-    ChartBuilder.prototype.chartValue = function(d, i) {
+    ChartBuilder.prototype._chartValue = function(d, i) {
         var last = this.config.data[i].values.length - 1;
 
         // Last value pair from the array
