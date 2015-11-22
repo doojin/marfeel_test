@@ -1,5 +1,6 @@
 (function() {
     require.config({
+        urlArgs: 'cb=' + Math.random(),
         paths: {
             'd3': '../../bower_components/d3/d3.min'
         }

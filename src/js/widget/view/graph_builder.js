@@ -24,26 +24,41 @@ define(['d3'], function() {
         x.domain([0, data.values.length-1]);
         y.domain([0, d3.max(data.values, function(d) { return d.member1 / d.member2 })]);
 
-        // Graph line
-        var line = d3.svg.line()
-            .interpolate('basis')
-            .x(function(d, i) { return x(i); })
-            .y(function(d) { return y(d.member1 / d.member2)});
-
         // Filling graph
         var area = d3.svg.area()
             .interpolate('basis')
             .x(function(d, i) { return x(i); })
             .y0(this.config.size / 2)
-            .y1(function(d) { return y(d.member1 / d.member2)});
+            .y1(0);
 
-        node.append('path')
+        var areaPath = node.append('path')
             .classed('fill', true)
             .datum(data.values)
             .attr('d', area);
 
-        node.append('path')
+        area.y1(function(d) { return y(d.member1 / d.member2)});
+
+        areaPath
+            .transition()
+            .duration(700)
+            .ease('linear')
+            .attr('d', area);
+
+        // Graph line animation
+        var line = d3.svg.line()
+            .interpolate('basis')
+            .x(function(d, i) { return x(i); })
+            .y(0);
+
+        var linePath = node.append('path')
             .classed('line', true)
+            .attr('d', line(data.values));
+
+        line.y(function(d) { return y(d.member1 / d.member2)});
+
+        linePath.transition()
+            .duration(700)
+            .ease('linear')
             .attr('d', line(data.values));
     };
 
