@@ -1,0 +1,15 @@
+.circle-chart path.line {
+    stroke-opacity: 0.3;
+    stroke-width: 2.5;
+    fill-opacity: 0;
+}
+
+.circle-chart path.fill {
+    fill-opacity: 0.1;
+    stroke-width: 0;
+}
+
+.circle-chart circle.outer{
+    fill-opacity: 0;
+    stroke: #fff;
+}

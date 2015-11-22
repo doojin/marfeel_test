@@ -1,4 +1,5 @@
-define(['d3'], function() {
+// Responsible for building circle chart
+define(['widget/view/graph_builder', 'd3'], function(graphBuilder) {
 
     var chartBuilder = {};
 
@@ -8,6 +9,7 @@ define(['d3'], function() {
         var group = this._buildGroups(parent);
 
         // Building all components of chart
+        this._buildGraphs(group);
         this._buildCircles(group);
         this._buildMarks(group);
 
@@ -22,10 +24,10 @@ define(['d3'], function() {
     };
 
     chartBuilder._buildCircles = function(parent) {
-        var circle2 = this._appendCircle(parent)
+        this._appendCircle(parent)
             .attr('stroke', chartBuilder.secondaryColor);
 
-        var circle1 = this._appendCircle(parent)
+        this._appendCircle(parent)
             .attr('stroke', chartBuilder.primaryColor)
             .attr('stroke-dasharray', chartBuilder.chartValue)
             // For animation only
@@ -48,6 +50,21 @@ define(['d3'], function() {
             .attr('height', function(d) { return d.height; })
             .attr('fill', chartBuilder.primaryColor)
             .attr('fill-opacity', 0.6);
+    };
+
+    chartBuilder._buildGraphs = function(parent) {
+        graphBuilder.build(parent, this.config);
+        this._addGraphColors(parent);
+    };
+
+    chartBuilder._addGraphColors = function(node) {
+        node.select('g')
+            .select('path.line')
+            .attr('stroke', chartBuilder.secondaryColor);
+
+        node.select('g')
+            .select('path.fill')
+            .attr('fill', chartBuilder.secondaryColor);
     };
 
     chartBuilder._markData = function() {
@@ -113,7 +130,7 @@ define(['d3'], function() {
     chartBuilder.chartValue = function(d, i) {
         var last = chartBuilder.config.data[i].values.length - 1;
 
-        // Latest value pair from the array
+        // Last value pair from the array
         var val1 = chartBuilder.config.data[i].values[last].member1;
         var val2 = chartBuilder.config.data[i].values[last].member2;
 

@@ -145,5 +145,23 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, builder) {
             expect(rect2.attr('height')).toEqual('40');
             expect(rect2.attr('fill')).toEqual('#fff');
         });
+
+        it('_addGraphColors() should fill graph with secondary color', function() {
+            var line = $('<path>').addClass('line');
+            var fill = $('<path>').addClass('fill');
+            var g = $('<g>').append(line).append(fill);
+            $('#fixture').find('svg').append(g);
+            var svg = d3.select('#fixture').select('svg');
+
+            spyOn(builder, 'secondaryColor').and.returnValue('#ff00ff');
+
+            expect(line.attr('stroke')).toBeUndefined();
+            expect(fill.attr('fill')).toBeUndefined();
+
+            builder._addGraphColors(svg);
+
+            expect(line.attr('stroke')).toEqual('#ff00ff');
+            expect(fill.attr('fill')).toEqual('#ff00ff');
+        });
     });
 });

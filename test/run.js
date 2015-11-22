@@ -26,7 +26,8 @@ define(['jQ', 'boot'], function($) {
     var specs = [
         'specs/widget/default_config_spec',
         'specs/widget/view/simple_view_spec',
-        'specs/widget/view/chart_builder_spec'
+        'specs/widget/view/chart_builder_spec',
+        'specs/widget/view/graph_builder_spec'
     ];
 
     require(specs, function() {

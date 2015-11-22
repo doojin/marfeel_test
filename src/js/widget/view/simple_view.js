@@ -14,6 +14,7 @@ define(['widget/view/chart_builder', 'd3'], function(chartBuilder) {
     SimpleView.prototype._buildSVG = function() {
         return d3.select(this.config.parent)
             .append('svg')
+            .classed('circle-chart', true)
             .attr('width', this._totalWidth())
             .attr('height', this._totalHeight());
     };
