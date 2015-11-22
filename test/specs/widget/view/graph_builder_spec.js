@@ -1,6 +1,6 @@
 define(['jQ', 'widget/view/graph_builder', 'd3'], function($, GraphBuilder) {
 
-    describe('graphBuilder', function() {
+    describe('GraphBuilder', function() {
 
         var builder;
 

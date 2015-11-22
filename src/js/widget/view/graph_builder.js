@@ -27,7 +27,7 @@ define(['d3'], function() {
         var y = d3.scale.linear().range([this.config.size / 4, 0]);
 
         x.domain([0, data.values.length-1]);
-        y.domain([0, d3.max(data.values, function(d) { return d.member1 / d.member2 })]);
+        y.domain([0, d3.max(data.values, function(d) { return d.m1 / d.m2 })]);
 
         // Filling graph
         var area = d3.svg.area()
@@ -41,7 +41,7 @@ define(['d3'], function() {
             .datum(data.values)
             .attr('d', area);
 
-        area.y1(function(d) { return y(d.member1 / d.member2)});
+        area.y1(function(d) { return y(d.m1 / d.m2)});
 
         areaPath.transition()
             .duration(TRANSITION_DURATION)
@@ -58,7 +58,7 @@ define(['d3'], function() {
             .classed('line', true)
             .attr('d', line(data.values));
 
-        line.y(function(d) { return y(d.member1 / d.member2)});
+        line.y(function(d) { return y(d.m1 / d.m2)});
 
         linePath.transition()
             .duration(TRANSITION_DURATION)

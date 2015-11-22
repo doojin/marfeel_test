@@ -95,8 +95,8 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
             .attr('font-size', this.config.sumSize)
             .text(function(d, i) {
                 var last = d.values.length - 1;
-                var val1 = self.config.data[i].values[last].member1;
-                var val2 = self.config.data[i].values[last].member2;
+                var val1 = self.config.data[i].values[last].m1;
+                var val2 = self.config.data[i].values[last].m2;
                 var result = val1 + val2;
                 return self._formatNumber(result, d.suffix);
             });
@@ -183,8 +183,8 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         var last = this.config.data[i].values.length - 1;
 
         // Last value pair from the array
-        var val1 = this.config.data[i].values[last].member1;
-        var val2 = this.config.data[i].values[last].member2;
+        var val1 = this.config.data[i].values[last].m1;
+        var val2 = this.config.data[i].values[last].m2;
 
         // Ratio of first and second values
         var ratio1 = val1 / (val1 + val2);

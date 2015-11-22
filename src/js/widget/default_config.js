@@ -11,7 +11,8 @@ define(function() {
             colors: [],
             fontFamily: 'Arial',
             titleSize: '20px',
-            sumSize: '28px'
+            sumSize: '28px',
+            descriptionSize: '14px'
         };
     }
 

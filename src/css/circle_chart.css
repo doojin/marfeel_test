@@ -22,7 +22,7 @@
     alignment-baseline: middle;
     fill: #9F9F9F;
     text-anchor: middle;
-    text-transform: uppercase;;
+    text-transform: uppercase;
 }
 
 .circle-chart text.sum {
@@ -34,4 +34,18 @@
 
 .circle-chart rect {
     fill-opacity: 0.6
+}
+
+.circle-chart text.left {
+    alignment-baseline: middle;
+    text-anchor: start;
+}
+
+.circle-chart text.right {
+    alignment-baseline: middle;
+    text-anchor: end;
+}
+
+.circle-chart text.member {
+    font-weight: bold;
 }

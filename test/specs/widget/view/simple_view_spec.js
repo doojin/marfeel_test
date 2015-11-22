@@ -1,4 +1,4 @@
-define(['jQ', 'widget/view/simple_view'], function($, SimpleView) {
+define(['jQ', 'widget/view/simple_view', 'widget/view/helper'], function($, SimpleView, helper) {
 
     describe('SimpleView', function() {
 
@@ -46,10 +46,12 @@ define(['jQ', 'widget/view/simple_view'], function($, SimpleView) {
                 paddingBottom: 20,
                 size: 100
             });
+            spyOn(simpleView, '_descriptionMarginTop').and.returnValue(10);
+            spyOn(simpleView, '_descriptionHeight').and.returnValue(50);
 
             var result = simpleView._totalHeight();
 
-            expect(result).toEqual(100);
+            expect(result).toEqual(160);
         });
 
         it('_buildSVG() should append SVG to parent node', function() {
@@ -98,5 +100,72 @@ define(['jQ', 'widget/view/simple_view'], function($, SimpleView) {
 
             expect(result).toEqual(100);
         });
+
+        it('_formatDescriptions() should format description', function() {
+            simpleView = new SimpleView();
+            spyOn(simpleView, '_descriptionPosition').and.returnValue('translate(10,20)');
+            spyOn(simpleView, '_descriptionEnd').and.returnValue(50);
+            spyOn(helper, 'secondaryColor').and.returnValue('#fff');
+            spyOn(helper, 'primaryColor').and.returnValue('#000');
+            var svg = $('<svg>');
+            var g = $('<g>');
+            g.append($('<text class="left member">'));
+            g.append($('<text class="right member">'));
+            svg.append(g);
+            $('#fixture').append(svg);
+
+            var node = d3.select('#fixture').select('svg').select('g');
+            simpleView._formatDescriptions(node);
+
+            var leftText = $('text.left.member');
+            var rightText = $('text.right.member');
+            expect(g.attr('transform')).toEqual('translate(10,20)');
+            expect(leftText.attr('fill')).toEqual('#fff');
+            expect(rightText.attr('fill')).toEqual('#000');
+        });
+
+        it('_descriptionPosition() should calculate desciprtion position', function() {
+            simpleView = new SimpleView({
+                size: 100
+            });
+            spyOn(simpleView, '_chartMarginLeft').and.returnValue(20);
+            spyOn(simpleView, '_chartMarginRight').and.returnValue(30);
+            spyOn(simpleView, '_descriptionMarginTop').and.returnValue(40);
+
+            var first = simpleView._descriptionPosition(null, 0);
+            var second = simpleView._descriptionPosition(null, 1);
+
+            expect(first).toEqual('translate(8,140)');
+            expect(second).toEqual('translate(158,140)');
+        });
+
+        it('_descriptionEnd() should calculate x coordinate of description right border', function() {
+            simpleView = new SimpleView({
+                size: 100
+            });
+            spyOn(simpleView, '_chartMarginLeft').and.returnValue(20);
+            spyOn(simpleView, '_chartMarginRight').and.returnValue(30);
+
+            var result = simpleView._descriptionEnd();
+
+            expect(result).toEqual(130);
+        });
+
+        it('_descriptionMarginTop() should return top margin of description', function() {
+            var simpleView = new SimpleView({
+                size: 100
+            });
+
+            expect(simpleView._descriptionMarginTop()).toEqual(5);
+        });
+
+        it('_descriptionHeight() the height of description', function() {
+            var simpleView = new SimpleView({
+                size: 100
+            });
+
+            expect(simpleView._descriptionHeight()).toEqual(30);
+        });
+
     });
 });

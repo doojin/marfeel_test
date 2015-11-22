@@ -1,6 +1,6 @@
 define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
 
-    describe('chartBuilder', function() {
+    describe('ChartBuilder', function() {
 
         var builder;
 
@@ -96,8 +96,8 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
         it('_chartValue() should calculate chart value', function() {
             builder.config.data = [{
                     values: [
-                        {member1: 12345, member2: 12345}, // dummy data
-                        {member1: 25, member2: 75} // last record that will be visualized
+                        {m1: 12345, m2: 12345}, // dummy data
+                        {m1: 25, m2: 75} // last record that will be visualized
                     ]
                 }];
             spyOn(builder, '_circleLength').and.returnValue(200);
