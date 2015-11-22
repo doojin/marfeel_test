@@ -1,4 +1,4 @@
-define(['widget/view/chart_builder', 'd3'], function(chartBuilder) {
+define(['widget/view/chart_builder', 'd3'], function(ChartBuilder) {
 
     // Widget representation without a slider
     function SimpleView(config) {
@@ -20,6 +20,7 @@ define(['widget/view/chart_builder', 'd3'], function(chartBuilder) {
     };
 
     SimpleView.prototype._buildCharts = function(parent) {
+        var chartBuilder = new ChartBuilder();
         var self = this;
         var charts = chartBuilder.build(parent, this.config);
         charts.attr('transform', function(d, i) { return self._chartPosition(d, i); });

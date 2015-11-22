@@ -1,9 +1,9 @@
 // Responsible for building circle chart
 define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
 
-    var chartBuilder = {};
+    function ChartBuilder() {}
 
-    chartBuilder.build = function(parent, config) {
+    ChartBuilder.prototype.build = function(parent, config) {
         this.config = config;
 
         var group = this._buildGroups(parent);
@@ -17,20 +17,22 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         return group;
     };
 
-    chartBuilder._buildGroups = function(parent) {
+    ChartBuilder.prototype._buildGroups = function(parent) {
         return parent.selectAll('g')
             .data(this.config.data)
             .enter()
             .append('g');
     };
 
-    chartBuilder._buildCircles = function(parent) {
-        this._appendCircle(parent)
-            .attr('stroke', chartBuilder.secondaryColor);
+    ChartBuilder.prototype._buildCircles = function(parent) {
+        var self = this;
 
         this._appendCircle(parent)
-            .attr('stroke', chartBuilder.primaryColor)
-            .attr('stroke-dasharray', chartBuilder.chartValue)
+            .attr('stroke', function(d, i) { return self.secondaryColor(d, i); });
+
+        this._appendCircle(parent)
+            .attr('stroke', function(d, i) { return self.primaryColor(d, i); })
+            .attr('stroke-dasharray', function(d, i) { return self.chartValue(d, i); })
             // For animation only
             .attr('stroke-dashoffset', -this._circleLength() / 2)
             .transition()
@@ -40,26 +42,27 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
     };
 
     // Drawing small marks on the top, bottom, left and right of circle
-    chartBuilder._buildMarks = function(parent) {
+    ChartBuilder.prototype._buildMarks = function(parent) {
+        var self = this;
         parent.selectAll('rect')
-            .data(chartBuilder._markData())
+            .data(this._markData())
             .enter()
             .append('rect')
             .attr('x', function(d) { return d.x; })
             .attr('y', function(d) { return d.y; })
             .attr('width', function(d) { return d.width; })
             .attr('height', function(d) { return d.height; })
-            .attr('fill', chartBuilder.primaryColor)
+            .attr('fill', function(d, i) { return self.primaryColor(d, i); })
             .attr('fill-opacity', 0.6);
     };
 
-    chartBuilder._buildGraphs = function(parent) {
+    ChartBuilder.prototype._buildGraphs = function(parent) {
         var graphBuilder = new GraphBuilder();
         graphBuilder.build(parent, this.config);
         this._addGraphColors(parent);
     };
 
-    chartBuilder._buildText = function(parent) {
+    ChartBuilder.prototype._buildText = function(parent) {
         parent.append('text')
             .classed('title', true)
             .attr('x', this.config.size / 2)
@@ -77,31 +80,32 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
             .attr('font-size', this.config.sumSize)
             .text(function(d, i) {
                 var last = d.values.length - 1;
-                var val1 = chartBuilder.config.data[i].values[last].member1;
-                var val2 = chartBuilder.config.data[i].values[last].member2;
+                var val1 = self.config.data[i].values[last].member1;
+                var val2 = self.config.data[i].values[last].member2;
                 var result = val1 + val2;
                 return self._formatNumber(result, d.suffix);
             });
     };
 
-    chartBuilder._formatNumber = function(number, suffix) {
+    ChartBuilder.prototype._formatNumber = function(number, suffix) {
         var format = d3.format('0,000');
         var result = format(number);
         result = result.replace(/,/g, '.');
         return suffix ? result + suffix : result;
     };
 
-    chartBuilder._addGraphColors = function(node) {
+    ChartBuilder.prototype._addGraphColors = function(node) {
+        var self = this;
         node.select('g')
             .select('path.line')
-            .attr('stroke', chartBuilder.secondaryColor);
+            .attr('stroke', function(d, i) { return self.secondaryColor(d, i); });
 
         node.select('g')
             .select('path.fill')
-            .attr('fill', chartBuilder.secondaryColor);
+            .attr('fill', function(d, i) { return self.secondaryColor(d, i); });
     };
 
-    chartBuilder._markData = function() {
+    ChartBuilder.prototype._markData = function() {
         var topMark = {};
         topMark.width = 0.015 * this.config.size;
         topMark.height = 0.02 * this.config.size;
@@ -129,7 +133,7 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         return [topMark, rightMark, bottomMark, leftMark];
     };
 
-    chartBuilder._appendCircle = function(parent) {
+    ChartBuilder.prototype._appendCircle = function(parent) {
         return parent.append('circle')
             .classed('chart', true)
             .attr('cx', this._circleCenter())
@@ -139,34 +143,34 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
             .attr('stroke-width', this.config.thickness);
     };
 
-    chartBuilder._circleRadius = function() {
+    ChartBuilder.prototype._circleRadius = function() {
         return this.config.size / 2 - this.config.thickness / 2;
     };
 
-    chartBuilder._circleCenter = function() {
+    ChartBuilder.prototype._circleCenter = function() {
         return this.config.size / 2;
     };
 
-    chartBuilder._circleLength = function() {
+    ChartBuilder.prototype._circleLength = function() {
         return Math.PI * 2 * this._circleRadius();
     };
 
-    chartBuilder.primaryColor = function(d, i) {
-        var pair = chartBuilder.config.colors[i];
-        return pair && pair.primary ? pair.primary : chartBuilder.config.primaryColor;
+    ChartBuilder.prototype.primaryColor = function(d, i) {
+        var pair = this.config.colors[i];
+        return pair && pair.primary ? pair.primary : this.config.primaryColor;
     };
 
-    chartBuilder.secondaryColor = function(d, i) {
-        var pair = chartBuilder.config.colors[i];
-        return pair && pair.secondary ? pair.secondary : chartBuilder.config.secondaryColor;
+    ChartBuilder.prototype.secondaryColor = function(d, i) {
+        var pair = this.config.colors[i];
+        return pair && pair.secondary ? pair.secondary : this.config.secondaryColor;
     };
 
-    chartBuilder.chartValue = function(d, i) {
-        var last = chartBuilder.config.data[i].values.length - 1;
+    ChartBuilder.prototype.chartValue = function(d, i) {
+        var last = this.config.data[i].values.length - 1;
 
         // Last value pair from the array
-        var val1 = chartBuilder.config.data[i].values[last].member1;
-        var val2 = chartBuilder.config.data[i].values[last].member2;
+        var val1 = this.config.data[i].values[last].member1;
+        var val2 = this.config.data[i].values[last].member2;
 
         // Ratio of first and second values
         var ratio1 = val1 / (val1 + val2);
@@ -174,12 +178,12 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
 
         // Dividing circle according to ratios
         var lengths = [
-            chartBuilder._circleLength() * ratio2,
-            chartBuilder._circleLength() * ratio1
+            this._circleLength() * ratio2,
+            this._circleLength() * ratio1
         ];
 
         return lengths.join(',');
     };
 
-    return chartBuilder;
+    return ChartBuilder;
 });
