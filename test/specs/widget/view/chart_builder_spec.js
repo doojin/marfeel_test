@@ -163,5 +163,22 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, builder) {
             expect(line.attr('stroke')).toEqual('#ff00ff');
             expect(fill.attr('fill')).toEqual('#ff00ff');
         });
+
+        it('_formatNumber() should format number with suffix', function() {
+            var number = 1000000;
+            var suffix = '$';
+
+            var result = builder._formatNumber(number, suffix);
+
+            expect(result).toBe('1.000.000$');
+        });
+
+        it('_formatNumber() should format number without suffix', function() {
+            var number = 1000000;
+
+            var result = builder._formatNumber(number);
+
+            expect(result).toBe('1.000.000');
+        });
     });
 });

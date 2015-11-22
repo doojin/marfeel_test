@@ -10,7 +10,7 @@ define(['widget/circle_chart'], function (CircleChart) {
     var chart = new CircleChart({
         data: [
             {
-                title: 'Title 1',
+                title: 'revenue',
                 member1: 'Member 1',
                 member2: 'Member 2',
                 values: [
@@ -26,8 +26,9 @@ define(['widget/circle_chart'], function (CircleChart) {
                     {member1: 100, member2: 200},
                     {member1: 300, member2: 200},
                     {member1: 50, member2: 200},
-                    {member1: 300, member2: 200}
-                ]
+                    {member1: 30000, member2: 20000}
+                ],
+                suffix: '€'
             }
         ],
         colors: [

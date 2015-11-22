@@ -9,7 +9,21 @@
     stroke-width: 0;
 }
 
-.circle-chart circle.outer{
+.circle-chart circle.outer {
     fill-opacity: 0;
     stroke: #fff;
+}
+
+.circle-chart text.title {
+    alignment-baseline: middle;
+    fill: #9F9F9F;
+    text-anchor: middle;
+    text-transform: uppercase;;
+}
+
+.circle-chart text.sum {
+    alignment-baseline: middle;
+    fill: #303030;
+    text-anchor: middle;
+    text-transform: uppercase;
 }

@@ -10,7 +10,7 @@ define(['d3'], function() {
         nodes.each(function(d) {
             var node = d3.select(this);
             var graph = node.append('g')
-                .attr('transform', 'translate(0,' + (self.config.size / 2) + ')');
+                .attr('transform', 'translate(0,' + (self.config.size / 1.8) + ')');
 
             self._buildGraph(graph, d);
             self._buildOuterCircle(node);

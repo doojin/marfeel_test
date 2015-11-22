@@ -12,6 +12,7 @@ define(['widget/view/graph_builder', 'd3'], function(graphBuilder) {
         this._buildGraphs(group);
         this._buildCircles(group);
         this._buildMarks(group);
+        this._buildText(group);
 
         return group;
     };
@@ -55,6 +56,38 @@ define(['widget/view/graph_builder', 'd3'], function(graphBuilder) {
     chartBuilder._buildGraphs = function(parent) {
         graphBuilder.build(parent, this.config);
         this._addGraphColors(parent);
+    };
+
+    chartBuilder._buildText = function(parent) {
+        parent.append('text')
+            .classed('title', true)
+            .attr('x', this.config.size / 2)
+            .attr('y', this.config.size / 3)
+            .attr('font-family', this.config.fontFamily)
+            .attr('font-size', this.config.titleSize)
+            .text(function(d) { return d.title });
+
+        var self = this;
+        parent.append('text')
+            .classed('sum', true)
+            .attr('x', this.config.size / 2)
+            .attr('y', this.config.size / 2.1)
+            .attr('font-family', this.config.fontFamily)
+            .attr('font-size', this.config.sumSize)
+            .text(function(d, i) {
+                var last = d.values.length - 1;
+                var val1 = chartBuilder.config.data[i].values[last].member1;
+                var val2 = chartBuilder.config.data[i].values[last].member2;
+                var result = val1 + val2;
+                return self._formatNumber(result, d.suffix);
+            });
+    };
+
+    chartBuilder._formatNumber = function(number, suffix) {
+        var format = d3.format('0,000');
+        var result = format(number);
+        result = result.replace(/,/g, '.');
+        return suffix ? result + suffix : result;
     };
 
     chartBuilder._addGraphColors = function(node) {

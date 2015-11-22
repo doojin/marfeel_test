@@ -21,7 +21,10 @@ define(['widget/default_config'], function(DefaultConfig) {
                 thickness: 10,
                 primaryColor: '#005E00',
                 secondaryColor: '#4DD027',
-                colors: []
+                colors: [],
+                fontFamily: 'Arial',
+                titleSize: '20px',
+                sumSize: '28px'
             });
         });
 
@@ -44,7 +47,10 @@ define(['widget/default_config'], function(DefaultConfig) {
                 thickness: 10,
                 primaryColor: '#005E00',
                 secondaryColor: '#4DD027',
-                colors: []
+                colors: [],
+                fontFamily: 'Arial',
+                titleSize: '20px',
+                sumSize: '28px'
             });
         });
     });
