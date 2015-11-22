@@ -4,10 +4,6 @@ define(function() {
         this.config = {
             size: 200,
             parent: 'body',
-            paddingTop: 30,
-            paddingRight: 30,
-            paddingBottom: 30,
-            paddingLeft: 30,
             spacing: 30,
             thickness: 10,
             primaryColor: '#005E00',
