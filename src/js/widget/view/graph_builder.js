@@ -1,9 +1,9 @@
 // Responsible for building graph inside the circle chart
 define(['d3'], function() {
 
-    var graphBuilder = {};
+    function GraphBuilder() {}
 
-    graphBuilder.build = function(nodes, config) {
+    GraphBuilder.prototype.build = function(nodes, config) {
         this.config = config;
 
         var self = this;
@@ -17,7 +17,7 @@ define(['d3'], function() {
         });
     };
 
-    graphBuilder._buildGraph = function(node, data) {
+    GraphBuilder.prototype._buildGraph = function(parent, data) {
         var x = d3.scale.linear().range([0, this.config.size]);
         var y = d3.scale.linear().range([this.config.size / 4, 0]);
 
@@ -31,15 +31,14 @@ define(['d3'], function() {
             .y0(this.config.size / 2)
             .y1(0);
 
-        var areaPath = node.append('path')
+        var areaPath = parent.append('path')
             .classed('fill', true)
             .datum(data.values)
             .attr('d', area);
 
         area.y1(function(d) { return y(d.member1 / d.member2)});
 
-        areaPath
-            .transition()
+        areaPath.transition()
             .duration(700)
             .ease('linear')
             .attr('d', area);
@@ -50,7 +49,7 @@ define(['d3'], function() {
             .x(function(d, i) { return x(i); })
             .y(0);
 
-        var linePath = node.append('path')
+        var linePath = parent.append('path')
             .classed('line', true)
             .attr('d', line(data.values));
 
@@ -62,8 +61,8 @@ define(['d3'], function() {
             .attr('d', line(data.values));
     };
 
-    graphBuilder._buildOuterCircle = function(node) {
-        node.append('circle')
+    GraphBuilder.prototype._buildOuterCircle = function(parent) {
+        parent.append('circle')
             .classed('outer', true)
             .attr('cx', this.config.size / 2)
             .attr('cy', this.config.size / 2)
@@ -71,13 +70,11 @@ define(['d3'], function() {
             .attr('stroke-width', this._outerCircleStroke());
     };
 
-    graphBuilder._outerCircleStroke = function() {
-        return this.config.size / 2;
-    };
+    GraphBuilder.prototype._outerCircleStroke = function() { return this.config.size / 2; };
 
-    graphBuilder._outerCircleRadius = function() {
+    GraphBuilder.prototype._outerCircleRadius = function() {
         return this.config.size / 2 + this._outerCircleStroke() / 2 - this.config.thickness - 7;
     };
 
-    return graphBuilder;
+    return GraphBuilder;
 });

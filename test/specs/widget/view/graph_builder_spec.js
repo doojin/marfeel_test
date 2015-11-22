@@ -1,8 +1,11 @@
-define(['jQ', 'widget/view/graph_builder', 'd3'], function($, builder) {
+define(['jQ', 'widget/view/graph_builder', 'd3'], function($, GraphBuilder) {
 
     describe('graphBuilder', function() {
 
+        var builder;
+
         beforeEach(function() {
+            builder = new GraphBuilder();
             builder.config = {};
             $('#fixture').append('<svg></svg>');
         });

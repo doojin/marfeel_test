@@ -1,5 +1,5 @@
 // Responsible for building circle chart
-define(['widget/view/graph_builder', 'd3'], function(graphBuilder) {
+define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
 
     var chartBuilder = {};
 
@@ -54,6 +54,7 @@ define(['widget/view/graph_builder', 'd3'], function(graphBuilder) {
     };
 
     chartBuilder._buildGraphs = function(parent) {
+        var graphBuilder = new GraphBuilder();
         graphBuilder.build(parent, this.config);
         this._addGraphColors(parent);
     };
