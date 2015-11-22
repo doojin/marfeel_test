@@ -1,9 +1,11 @@
 define([
     'widget/default_config',
-    'widget/view/simple_view'
+    'widget/view/simple_view',
+    'widget/view/carousel_view'
 ], function(
     DefaultConfig,
-    SimpleView
+    SimpleView,
+    CarouselView
 ) {
 
     function CircleChart(config) {
@@ -11,7 +13,7 @@ define([
     }
 
     CircleChart.prototype.init = function() {
-        this.view = new SimpleView(this.config);
+        this.view = this.config.view == 'simple' ? new SimpleView(this.config) : new CarouselView(this.config);
         this.view.build();
     };
 

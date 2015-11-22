@@ -82,8 +82,12 @@ define(['widget/circle_chart'], function (CircleChart) {
     var chart = new CircleChart(config);
     chart.init();
 
-    config.colors = [{ primary: 'red', secondary: '#AEB846' }];
+    config.colors = [{ primary: 'red', secondary: '#AEB846' }, {primary: 'purple', secondary: 'lightblue'}];
     var chart2 = new CircleChart(config);
     chart2.init();
+
+    config.view = 'carousel';
+    var chart3 = new CircleChart(config);
+    chart3.init();
 
 });

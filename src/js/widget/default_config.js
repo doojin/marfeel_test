@@ -9,10 +9,13 @@ define(function() {
             primaryColor: '#005E00',
             secondaryColor: '#4DD027',
             colors: [],
-            fontFamily: 'Arial',
+            fontFamily: 'sans-serif',
             titleSize: '20px',
             sumSize: '28px',
-            descriptionSize: '14px'
+            descriptionSize: '14px',
+            view: 'simple',
+
+            ratioSize: '24px' // Carousel only
         };
     }
 

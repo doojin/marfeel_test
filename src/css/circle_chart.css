@@ -57,3 +57,14 @@
 .circle-chart rect.underline {
     fill: #E2E2E2;
 }
+
+.circle-chart .nav {
+    fill: #fff;
+    stroke: #999;
+    stroke-width: 1;
+    cursor: pointer;
+}
+
+.circle-chart .nav.active {
+    fill: #eee;
+}

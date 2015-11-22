@@ -17,7 +17,7 @@ define([
     }
 
     SimpleView.prototype.build = function() {
-        var svg = this._buildSVG();
+        var svg = this.svg = this._buildSVG();
         this._buildCharts(svg);
         this._buildDescriptions(svg);
     };
@@ -33,14 +33,14 @@ define([
 
     SimpleView.prototype._buildCharts = function(parent) {
         var chartBuilder = new ChartBuilder();
-        var charts = chartBuilder.build(parent, this.config);
+        var charts = this.charts = chartBuilder.build(parent, this.config);
         var self = this;
         charts.attr('transform', function(d, i) { return self._chartPosition(d, i); });
     };
 
     SimpleView.prototype._buildDescriptions = function(parent) {
         var descriptionBuilder = new DescriptionBuilder();
-        var descriptions = descriptionBuilder.build(parent, this.config);
+        var descriptions = this.descriptions = descriptionBuilder.build(parent, this.config);
         this._formatDescriptions(descriptions);
     };
 
