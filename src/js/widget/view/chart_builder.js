@@ -1,6 +1,15 @@
 // Responsible for building circle chart
 define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
 
+    var NUMBER_FORMAT = '0,000',
+        NUMBER_SEPARATOR = '.',
+        MARK = {
+            length: 0.02,
+            thickness: 0.015
+        },
+        TRANSITION_DURATION = 700,
+        EASE = 'linear';
+
     function ChartBuilder() {}
 
     ChartBuilder.prototype.build = function(parent, config) {
@@ -36,8 +45,8 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
             // For animation only
             .attr('stroke-dashoffset', -this._circleLength() / 2)
             .transition()
-            .duration(700)
-            .ease('linear-in-out')
+            .duration(TRANSITION_DURATION)
+            .ease(EASE)
             .attr('stroke-dashoffset', this._circleLength() / 4);
     };
 
@@ -55,7 +64,6 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
 
         parent.each(function(d, i) {
             var primaryColor = self._primaryColor(d, i);
-            console.log(primaryColor);
             d3.select(this)
                 .selectAll('rect')
                 .attr('fill', primaryColor);
@@ -68,6 +76,7 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
         this._addGraphColors(parent);
     };
 
+    // Building chart title and value sum
     ChartBuilder.prototype._buildText = function(parent) {
         parent.append('text')
             .classed('title', true)
@@ -94,9 +103,9 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
     };
 
     ChartBuilder.prototype._formatNumber = function(number, suffix) {
-        var format = d3.format('0,000');
+        var format = d3.format(NUMBER_FORMAT);
         var result = format(number);
-        result = result.replace(/,/g, '.');
+        result = result.replace(/,/g, NUMBER_SEPARATOR);
         return suffix ? result + suffix : result;
     };
 
@@ -113,26 +122,26 @@ define(['widget/view/graph_builder', 'd3'], function(GraphBuilder) {
 
     ChartBuilder.prototype._markData = function() {
         var topMark = {};
-        topMark.width = 0.015 * this.config.size;
-        topMark.height = 0.02 * this.config.size;
+        topMark.width = MARK.thickness * this.config.size;
+        topMark.height = MARK.length * this.config.size;
         topMark.x = this.config.size / 2 - topMark.width / 2;
         topMark.y = this.config.thickness + 1;
 
         var rightMark = {};
-        rightMark.width = 0.02 * this.config.size;
-        rightMark.height = 0.015 * this.config.size;
+        rightMark.width = MARK.length * this.config.size;
+        rightMark.height = MARK.thickness * this.config.size;
         rightMark.x = this.config.size - rightMark.width - this.config.thickness - 1;
         rightMark.y = this.config.size / 2 - topMark.height / 2;
 
         var bottomMark = {};
-        bottomMark.width = 0.015 * this.config.size;
-        bottomMark.height = 0.02 * this.config.size;
+        bottomMark.width = MARK.thickness * this.config.size;
+        bottomMark.height = MARK.length * this.config.size;
         bottomMark.x = this.config.size / 2 - bottomMark.width / 2;
         bottomMark.y = this.config.size - bottomMark.height - this.config.thickness - 1;
 
         var leftMark = {};
-        leftMark.width = 0.02 * this.config.size;
-        leftMark.height = 0.015 * this.config.size;
+        leftMark.width = MARK.length * this.config.size;
+        leftMark.height = MARK.thickness * this.config.size;
         leftMark.x = this.config.thickness + 1;
         leftMark.y = this.config.size / 2 - leftMark.height / 2;
 

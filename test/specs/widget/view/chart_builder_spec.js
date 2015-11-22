@@ -71,7 +71,7 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
 
         it('_primaryColor() should return default primary color from config if color array is empty', function() {
             builder.config.colors = [];
-            builder.config._primaryColor = 'p1';
+            builder.config.primaryColor = 'p1';
 
             expect(builder._primaryColor(null, 0)).toEqual('p1');
         });
@@ -88,7 +88,7 @@ define(['jQ', 'widget/view/chart_builder', 'd3'], function($, ChartBuilder) {
 
         it('_secondaryColor() should return default secondary color from config if color array is empty', function() {
             builder.config.colors = [];
-            builder.config._secondaryColor = 's1';
+            builder.config.secondaryColor = 's1';
 
             expect(builder._secondaryColor(null, 0)).toEqual('s1');
         });

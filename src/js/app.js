@@ -58,18 +58,18 @@ define(['widget/circle_chart'], function (CircleChart) {
                 member2: 'Member 2',
                 values: [
                     {member1: 100, member2: 200},
-                    {member1: 300, member2: 200},
-                    {member1: 50, member2: 200},
-                    {member1: 200, member2: 200},
-                    {member1: 400, member2: 200},
-                    {member1: 150, member2: 200},
-                    {member1: 50, member2: 200},
-                    {member1: 200, member2: 200},
-                    {member1: 400, member2: 200},
+                    {member1: 120, member2: 200},
+                    {member1: 90, member2: 200},
+                    {member1: 110, member2: 200},
+                    {member1: 140, member2: 200},
                     {member1: 100, member2: 200},
-                    {member1: 300, member2: 200},
                     {member1: 50, member2: 200},
-                    {member1: 30000, member2: 20000}
+                    {member1: 100, member2: 200},
+                    {member1: 120, member2: 200},
+                    {member1: 100, member2: 200},
+                    {member1: 120, member2: 200},
+                    {member1: 50, member2: 200},
+                    {member1: 120, member2: 200}
                 ],
                 suffix: '€'
             }

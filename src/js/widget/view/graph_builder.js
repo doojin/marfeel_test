@@ -1,6 +1,11 @@
 // Responsible for building graph inside the circle chart
 define(['d3'], function() {
 
+    var BORDER_PADDING = 7, // Space between nested graphic and circle's inner border
+        TRANSITION_DURATION = 700,
+        INTERPOLATION = 'basis',
+        EASE = 'linear';
+
     function GraphBuilder() {}
 
     GraphBuilder.prototype.build = function(nodes, config) {
@@ -26,7 +31,7 @@ define(['d3'], function() {
 
         // Filling graph
         var area = d3.svg.area()
-            .interpolate('basis')
+            .interpolate(INTERPOLATION)
             .x(function(d, i) { return x(i); })
             .y0(this.config.size / 2)
             .y1(0);
@@ -39,13 +44,13 @@ define(['d3'], function() {
         area.y1(function(d) { return y(d.member1 / d.member2)});
 
         areaPath.transition()
-            .duration(700)
-            .ease('linear')
+            .duration(TRANSITION_DURATION)
+            .ease(EASE)
             .attr('d', area);
 
         // Graph line animation
         var line = d3.svg.line()
-            .interpolate('basis')
+            .interpolate(INTERPOLATION)
             .x(function(d, i) { return x(i); })
             .y(0);
 
@@ -56,8 +61,8 @@ define(['d3'], function() {
         line.y(function(d) { return y(d.member1 / d.member2)});
 
         linePath.transition()
-            .duration(700)
-            .ease('linear')
+            .duration(TRANSITION_DURATION)
+            .ease(EASE)
             .attr('d', line(data.values));
     };
 
@@ -73,7 +78,7 @@ define(['d3'], function() {
     GraphBuilder.prototype._outerCircleStroke = function() { return this.config.size / 2; };
 
     GraphBuilder.prototype._outerCircleRadius = function() {
-        return this.config.size / 2 + this._outerCircleStroke() / 2 - this.config.thickness - 7;
+        return this.config.size / 2 + this._outerCircleStroke() / 2 - this.config.thickness - BORDER_PADDING;
     };
 
     return GraphBuilder;
