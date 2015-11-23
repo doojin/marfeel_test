@@ -13,15 +13,16 @@ define(['widget/default_config'], function(DefaultConfig) {
             expect(result).toEqual({
                 size: 1024,
                 parent: 'body',
-                spacing: 30,
                 thickness: 10,
                 primaryColor: '#005E00',
                 secondaryColor: '#4DD027',
                 colors: [],
-                fontFamily: 'Arial',
+                fontFamily: 'sans-serif',
                 titleSize: '20px',
                 sumSize: '28px',
-                descriptionSize: '14px'
+                descriptionSize: '14px',
+                ratioSize: '24px',
+                view: 'simple'
             });
         });
 
@@ -36,15 +37,16 @@ define(['widget/default_config'], function(DefaultConfig) {
                 prop1: 'value1',
                 prop2: 'value2',
                 parent: 'body',
-                spacing: 30,
                 thickness: 10,
                 primaryColor: '#005E00',
                 secondaryColor: '#4DD027',
                 colors: [],
-                fontFamily: 'Arial',
+                fontFamily: 'sans-serif',
                 titleSize: '20px',
                 sumSize: '28px',
-                descriptionSize: '14px'
+                descriptionSize: '14px',
+                ratioSize: '24px',
+                view: 'simple'
             });
         });
     });
