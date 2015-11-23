@@ -68,3 +68,7 @@
 .circle-chart .nav.active {
     fill: #eee;
 }
+
+.circle-chart {
+    overflow: hidden;
+}
