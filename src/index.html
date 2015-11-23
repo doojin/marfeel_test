@@ -3,9 +3,233 @@
 <head>
     <title>Marfeel Test</title>
     <link rel="stylesheet" type="text/css" href="css/circle_chart.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <script data-main="js/app" src="../bower_components/requirejs/require.js"></script>
 </head>
 <body>
 
+    <div class="example" id="example1">
+        <h1>Example 1</h1>
+    </div>
+
+    <div class="example" id="example2">
+        <h1>Example 2</h1>
+    </div>
+
+    <div class="example">
+        <h1>Widget Configuration</h1>
+
+        <p>I decided not just to complete the given task by making static widget to satisfy task description, but to create
+        a configurable, reusable component. You can configure it via passing configuration object to widget's constructor:</p>
+<pre>
+    var widget = new CircleChart({
+        // Config options go here.
+    });
+
+    widget.init();
+</pre>
+
+        <p>
+            As a result I got a widget which dynamically calculates positions and sizes of it's inner elements. But everything
+            has it's cost. In my case I paid with an additional amount of code which do nothing but making calculations of
+            coordinates and sizes. This part code is not really interesting to read so I hope you won't hit me too much :)
+        </p>
+
+        <p>
+            Options you can pass to your configuration object:
+        </p>
+
+<pre>
+    size
+</pre>
+        <p>
+            It's a size (diameter) of the circle. Default value is 200. The sizes and positions of other widget components are dynamically
+            calculated according to this parameter.
+        </p>
+
+<pre>
+    parent
+</pre>
+
+        <p>
+            The identifier of html element that widget will be applied to. For example: 'p', 'div.myClass', '#myDiv'.
+            Default value is 'body'.
+        </p>
+
+<pre>
+    thickness
+</pre>
+
+        <p>
+            The width of colorful circle borders. Default value is 10.
+        </p>
+
+<pre>
+    primaryColor
+    secondaryColor
+</pre>
+
+        <p>
+            The default colours of chart. If no colours are found for i-th chart, these colours will be set. Default
+            values are '#005E00' and '#4DD027' for primaryColor and secondaryColor respectively.
+        </p>
+
+<pre>
+    colors
+</pre>
+
+        <p>
+            Array of colours. i-th element of array represents colour pair for i-th chart. Array elements have format:
+            {primary: '#...', secondary: '#...'}. Default value is [].
+        </p>
+
+<pre>
+    fontFamily
+</pre>
+
+        <p>
+            Font for all text labels inside the widget. Default value is 'sans-serif'.
+        </p>
+
+<pre>
+    titleSize
+</pre>
+
+        <p>
+            Sets the font size for chart's title. Default value is '20px'.
+        </p>
+
+
+<pre>
+    sumSize
+</pre>
+
+        <p>
+            Sets the font size for chart's value pair's sum text. Default value is '28px'.
+        </p>
+
+<pre>
+    descriptionSize
+</pre>
+
+        <p>
+            Sets the font size of text that is displayed on the bottom of the chart. Default value is '14px'.
+        </p>
+
+<pre>
+    view
+</pre>
+
+        <p>
+            Sets one of two widget modes. Possible values: 'simple' and 'carousel'. Default value is 'simple'.
+        </p>
+
+<pre>
+    data
+</pre>
+
+        <p>
+            Object which contains chart data. All calculations and widget's behaviour depends on this property. Should
+            be provided by developer. The graph inside the chart is a visual representation of data object.
+        </p>
+
+    </div>
+
+    <div class="example" id="example3">
+        <h1>More examples? A single chart.</h1>
+
+<pre>
+    var singleChart = new CircleChart({
+        parent: '#example3',
+        data: [ // One array element
+            {
+                title: 'Title',
+                member1: 'First',
+                member2: 'Second',
+                values: [
+                    {m1: 250, m2: 350},
+                    {m1: 100, m2: 800},
+                    {m1: 100, m2: 800}
+                ]
+            }
+        ]
+    });
+    singleChart.init();
+</pre>
+    </div>
+
+    <div class="example" id="example4">
+        <h1>Changing size of circles</h1>
+
+<pre>
+    {
+        parent: '#example4',
+        size: 260,
+        colors: [
+            {primary: '#8F1515', secondary: '#F2E529'},
+            {primary: '#605DB0', secondary: '#5DB081'}
+        ],
+        data: data
+    }
+</pre>
+    </div>
+
+    <div class="example" id="example5">
+        <h1>Also changing size of borders...</h1>
+
+<pre>
+    {
+        parent: '#example5',
+        size: 260,
+        thickness: 30,
+        colors: [
+            {primary: '#8F1515', secondary: '#F2E529'},
+            {primary: '#605DB0', secondary: '#5DB081'}
+        ],
+        data: data
+    }
+</pre>
+    </div>
+
+    <div class="example" id="example6">
+        <h1>... and font sizes</h1>
+
+<pre>
+    {
+        parent: '#example6',
+        size: 260,
+        thickness: 30,
+        descriptionSize: '18px',
+        sumSize: '20px',
+        titleSize: '12px',
+        colors: [
+            {primary: '#8F1515', secondary: '#F2E529'},
+            {primary: '#605DB0', secondary: '#5DB081'}
+        ],
+        data: data
+    }
+</pre>
+    </div>
+
+    <div class="example" id="example7">
+        <h1>Let's make a carousel from it</h1>
+
+<pre>
+    {
+        parent: '#example7',
+        view: 'carousel',
+        size: 260,
+        thickness: 30,
+        descriptionSize: '18px',
+        sumSize: '20px',
+        titleSize: '16px',
+        colors: [
+            {primary: '#8F1515', secondary: '#F2E529'},
+            {primary: '#605DB0', secondary: '#5DB081'}
+        ],
+        data: data
+    }
+</pre>
+    </div>
+
 </body>
-</html>

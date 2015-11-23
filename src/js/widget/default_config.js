@@ -4,7 +4,6 @@ define(function() {
         this.config = {
             size: 200,
             parent: 'body',
-            spacing: 30,
             thickness: 10,
             primaryColor: '#005E00',
             secondaryColor: '#4DD027',

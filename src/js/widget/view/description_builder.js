@@ -38,7 +38,7 @@ define(['widget/view/helper', 'd3'], function(helper) {
 
         value.append('tspan')
             .classed('raw', true)
-            .attr('dx', this.config.size * 0.03)
+            .attr('dx', this.config.size * 0.05)
             .text(function(d) {
                 var last = d.values.length - 1;
                 var rawValue = d.values[last].m1;
@@ -55,19 +55,19 @@ define(['widget/view/helper', 'd3'], function(helper) {
             .classed('right', true);
 
         value.append('tspan')
+            .classed('ratio', true)
+            .text(function(d) {
+                var lastPair = helper.lastValues(d);
+                return 100 - helper.ratio(lastPair) + '%'; });
+
+        value.append('tspan')
             .classed('raw', true)
+            .attr('dx', this.config.size * 0.05)
             .text(function(d) {
                 var last = d.values.length - 1;
                 var rawValue = d.values[last].m2;
                 return helper.formatNumber(rawValue, d.suffix);
             });
-
-        value.append('tspan')
-            .classed('ratio', true)
-            .attr('dx', this.config.size * 0.03)
-            .text(function(d) {
-                var lastPair = helper.lastValues(d);
-                return 100 - helper.ratio(lastPair) + '%'; });
 
     };
 
