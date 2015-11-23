@@ -1,3 +1,7 @@
+// TODO: if deadline will allow, then this class refactoring is a MUST (!!):
+// 1. Moving all possible common attributes to CSS
+// 2. No 'magic values' in the class. Move to constants / methods
+// 3. Separate long, hard readable methods into small, testable ones
 define([
     'widget/view/simple_view',
     'widget/view/helper'
@@ -11,10 +15,8 @@ define([
     }
 
     CarouselView.prototype = Object.create(SimpleView.prototype);
-
-
     CarouselView.prototype._oldFormatDescriptions = CarouselView.prototype._formatDescriptions;
-    // TODO: move these magic numbers to constants / methods
+
     CarouselView.prototype._formatDescriptions = function(descriptions) {
         this._oldFormatDescriptions(descriptions);
 
@@ -25,16 +27,15 @@ define([
             .remove();
 
         descriptions.select('text.member.left')
-            .style('text-anchor', 'end')
-            .style('font-weight', 'normal')
+            .classed('carousel', true)
             .attr('fill', '#B6B0C1')
-            .attr('x', this._descriptionEnd() / 2 - this._descriptionPadding());
+            .attr('x', this._memberLeftX());
 
         descriptions.select('text.member.right')
+            .classed('carousel', true)
             .style('text-anchor', 'start')
-            .style('font-weight', 'normal')
             .attr('fill', '#B6B0C1')
-            .attr('x', this._descriptionEnd() / 2 + this._descriptionPadding());
+            .attr('x', this._memberRightX());
 
         this._buildRatioLabels(descriptions);
         this._buildRawValueLabels(descriptions);
@@ -43,15 +44,15 @@ define([
         this._buildNavigation();
     };
 
-    // TODO: tests
     CarouselView.prototype._buildRatioLabels = function(parent) {
         var self = this;
 
         parent.append('text')
-            .attr('fill', function(d, i) { return helper.secondaryColor(d, i, self.config) })
+            .attr('fill', function(d, i) {
+                return helper.secondaryColor(d, i, self.config)
+            })
             .text(function(d) {
-                var lastPair = helper.lastValues(d);
-                return helper.ratio(lastPair) + '%';
+                return helper.ratio(helper.lastValues(d)) + '%';
             })
             .attr('font-size', this.config.ratioSize)
             .attr('x', this._descriptionEnd() / 2 - this._descriptionPadding())
@@ -72,7 +73,6 @@ define([
             .attr('y', this._ratioLabelsMarginTop());
     };
 
-    // TODO: tests
     CarouselView.prototype._buildRawValueLabels = function(parent) {
         parent.append('text')
             .attr('fill', '#767A84')
@@ -99,7 +99,6 @@ define([
             .attr('font-family', this.config.fontFamily);
     };
 
-    // TODO: tests
     CarouselView.prototype._buildLine = function(parent) {
         parent.append('rect')
             .attr('width', this._lineWidth())
@@ -111,7 +110,7 @@ define([
 
     CarouselView.prototype._buildNavigation = function() {
         var nav = this.svg.append('g')
-            .attr('transform', 'translate(' + this._navX() + ',' + this._navY() + ')');
+            .attr('transform', 'translate(' + this._navigationX() + ',' + this._navigationY() + ')');
 
         var self = this;
         nav.selectAll('circle')
@@ -133,106 +132,94 @@ define([
             });
 
         this.current = 0;
-        this.running = false;
     };
 
     CarouselView.prototype._changePositions = function(diff) {
+        this.running = true;
         var self = this;
-
-        this.charts.transition()
-            .duration(700)
-            .attr('transform', function() {
-                var transformAttr = d3.select(this).attr('transform');
-                var transform = d3.transform(transformAttr);
-                var x = transform.translate[0];
-                x += diff * self._totalWidth();
-                var y = transform.translate[1];
-                return 'translate(' + x + ',' + y + ')';
-            });
-
-        this.descriptions.transition()
-            .duration(700)
-            .attr('transform', function() {
-                var transformAttr = d3.select(this).attr('transform');
-                var transform = d3.transform(transformAttr);
-                var x = transform.translate[0];
-                x += diff * self._totalWidth();
-                var y = transform.translate[1];
-                return 'translate(' + x + ',' + y + ')';
-            });
-
+        this._moveElement(diff, this.charts);
+        this._moveElement(diff, this.descriptions);
         setTimeout(function() {
             self.running = false
         }, 700);
     };
 
-    // TODO: tests
+    CarouselView.prototype._moveElement = function(diff, element) {
+        var self = this;
+        element.transition()
+            .duration(700)
+            .attr('transform', function() {
+                var transformAttr = d3.select(this).attr('transform');
+                var transform = d3.transform(transformAttr);
+                var x = transform.translate[0];
+                var y = transform.translate[1];
+                x += diff * self._totalWidth();
+                return 'translate(' + x + ',' + y + ')';
+            });
+    };
+
     CarouselView.prototype._totalWidth = function() {
         return this._chartMarginLeft() + this.config.size + this._chartMarginRight();
     };
 
-    // TODO: tests
     CarouselView.prototype._totalHeight = function() {
-        return this._navY() +
+        return this._navigationY() +
             this._navItemSize();
     };
 
-    // TODO: tests
     SimpleView.prototype._descriptionMarginTop = function() {
         return this.config.size * 0.15;
     };
 
-    // TODO: tests
     SimpleView.prototype._descriptionHeight = function() {
         return this.config.size * 0.4;
     };
 
-    // TODO: tests
     CarouselView.prototype._descriptionPadding = function() {
         return this.config.size * 0.1;
     };
 
-    // TODO: tests
     CarouselView.prototype._ratioLabelsMarginTop = function() {
         return this.config.size * 0.18;
     };
 
-    // TODO: tests
     CarouselView.prototype._rawLabelMarginTop = function() {
         return this.config.size * 0.3;
     };
 
-    // TODO: tests
     CarouselView.prototype._lineWidth = function() {
         return this.config.size * 0.005;
     };
 
-    // TODO: tests
     CarouselView.prototype._lineY = function() {
         return - this.config.size * 0.07;
     };
 
-    // TODO: tests
     CarouselView.prototype._navItemSize = function() {
         return this.config.size * 0.08;
     };
 
-    // TODO: tests
     CarouselView.prototype._navSize = function() {
         return this.config.data.length * this._navItemSize();
     };
 
-    // TODO: tests
-    CarouselView.prototype._navX = function() {
+    CarouselView.prototype._navigationX = function() {
         return this._totalWidth() / 2 - this._navSize() / 2;
     };
 
-    // TODO: tests
-    CarouselView.prototype._navY = function() {
+    CarouselView.prototype._navigationY = function() {
         return this._descriptionMarginTop() +
             this._descriptionHeight() +
             this._navItemSize() +
             this.config.size;
+    };
+
+    CarouselView.prototype._memberLeftX = function() {
+        return this._descriptionEnd() / 2 - this._descriptionPadding()
+    };
+
+    CarouselView.prototype._memberRightX = function() {
+        return this._descriptionEnd() / 2 + this._descriptionPadding();
     };
 
     return CarouselView;

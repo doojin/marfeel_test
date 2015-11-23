@@ -44,7 +44,6 @@ define([
         this._formatDescriptions(descriptions);
     };
 
-    // TODO: move these magic numbers to constants / methods
     SimpleView.prototype._formatDescriptions = function(descriptions) {
         var self = this;
 

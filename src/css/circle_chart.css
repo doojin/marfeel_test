@@ -50,6 +50,11 @@
     font-weight: bold;
 }
 
+.circle-chart text.member.carousel {
+    text-anchor: end;
+    font-weight: normal;
+}
+
 .circle-chart tspan.raw {
     fill: #A0A0A0;
 }

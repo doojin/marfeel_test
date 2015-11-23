@@ -166,7 +166,7 @@ define(['jQ', 'widget/view/simple_view', 'widget/view/helper'], function($, Simp
                 size: 100
             });
 
-            expect(simpleView._descriptionMarginTop()).toEqual(5);
+            expect(simpleView._descriptionMarginTop()).toEqual(15);
         });
 
         it('_descriptionHeight() the height of description', function() {
@@ -174,7 +174,7 @@ define(['jQ', 'widget/view/simple_view', 'widget/view/helper'], function($, Simp
                 size: 100
             });
 
-            expect(simpleView._descriptionHeight()).toEqual(30);
+            expect(simpleView._descriptionHeight()).toEqual(40);
         });
 
     });

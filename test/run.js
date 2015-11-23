@@ -29,7 +29,8 @@ define(['jQ', 'boot'], function($) {
         'specs/widget/view/simple_view_spec',
         'specs/widget/view/chart_builder_spec',
         'specs/widget/view/graph_builder_spec',
-        'specs/widget/view/description_builder_spec'
+        'specs/widget/view/description_builder_spec',
+        'specs/widget/view/carousel_view_spec'
     ];
 
     require(specs, function() {

@@ -7,7 +7,6 @@
     });
 })();
 
-// TODO: rename build methods
 define(['widget/circle_chart', 'repository'], function (CircleChart, repo) {
 
     repo.load('task-data-1', function(data) {
