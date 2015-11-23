@@ -2,10 +2,12 @@
 
 In order to download dependencies you will need NodeJS and bower installed.
 
-Run:
+Just run:
 
-npm install
-bower install
+> npm install
+> bower install
 
-App: src/index.html
-Tests: test/SpecRuner.html
+App:
+> src/index.html
+Tests:
+> test/SpecRuner.html
